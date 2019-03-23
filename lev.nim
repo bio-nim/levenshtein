@@ -1,9 +1,11 @@
 # vim: sts=2:ts=2:sw=2:et:tw=0
 # from dataman
 # https://forum.nim-lang.org/t/1730#18658
-from strutils import editDistance
+#from strutils import editDistance
+from std/editdistance import editDistanceAscii
 import os
 import nimbench
+let editDistance1 = editDistance.editDistanceAscii
 
 proc editDistance2*(a, b: string): int = #{.noSideEffect.} =
   ## Returns the edit distance between `a` and `b`.
@@ -46,7 +48,7 @@ proc editDistance2*(a, b: string): int = #{.noSideEffect.} =
 
   for i in 0..len2 - 1: row[i] = i
 
-  for i in 1 .. len1- 1:
+  for i in 1 .. len1 - 1:
     var char1 = a[s + i - 1]
     var prevCost = i - 1;
     var newCost = i;
@@ -78,13 +80,13 @@ if paramCount() > 1:
   else:
     s2 = paramStr(2)
 
-echo "editDistance:  ", editDistance(s1, s2)
+echo "editDistance:  ", editDistance1(s1, s2)
 echo "editDistance2: ", editDistance2(s1, s2)
 
-bench(editDistance, m):
+bench(editDistance1, m):
   var d = 0
   for i in 1..m:
-    d = editDistance(s1, s2)
+    d = editDistance1(s1, s2)
 
   doNotOptimizeAway(d)
 
