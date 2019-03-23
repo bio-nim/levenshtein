@@ -1,7 +1,8 @@
 # vim: sts=2:ts=2:sw=2:et:tw=0
 # from dataman
 # https://forum.nim-lang.org/t/1730#18658
-import strutils, os
+from strutils import editDistance
+import os
 import nimbench
 
 proc editDistance2*(a, b: string): int = #{.noSideEffect.} =
